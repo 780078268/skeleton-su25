@@ -1,4 +1,6 @@
-/** Array Operations Class. Optional Exercise **/
+/**
+ * Array Operations Class. Optional Exercise
+ **/
 public class ArrayOperations {
     /**
      * Delete the value at the given position in the argument array, shifting
@@ -10,6 +12,12 @@ public class ArrayOperations {
             return;
         }
         // TODO: fill out this function
+        else {
+            for (int i = pos; i < values.length - 1; i++) {
+                values[i] = values[i + 1];
+            }
+            values[values.length - 1] = 0;
+        }
     }
 
     /**
@@ -22,15 +30,30 @@ public class ArrayOperations {
             return;
         }
         // TODO: fill out this function
+            for(int i =values.length-1; i > pos; i--) {
+                values[i] = values[i-1];
+            }
+            values[pos] = newInt;
+
     }
 
-    /** 
+    /**
      * Returns a new array consisting of the elements of A followed by the
-     *  the elements of B. 
+     * the elements of B.
      */
     public static int[] catenate(int[] A, int[] B) {
         // TODO: fill out this function
-        return null;
+        int N = A.length;
+        int M = B.length;
+        int c=M+N;
+        int [] values = new int[c];
+        for(int i = 0; i < N ; i++) {
+            values[i]=A[i];
+        }
+        for(int j = N; j < M+N ; j++) {
+            values[j]=B[j-N];
+        }
+        return values;
     }
 
 }
