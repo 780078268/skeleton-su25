@@ -1,7 +1,3 @@
-/** Abstract class for Triangle methods.
- * DO NOT EDIT.
- * @author Crystal Wang
- * */
 abstract class Triangle {
      /** Given triangle side lengths side1, side2, and side3, return whether or not they could form a valid triangle
       * defined by the triangle inequality: any the sum of any two sides must be > the third side. */
