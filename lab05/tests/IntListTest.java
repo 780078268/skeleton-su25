@@ -1,4 +1,6 @@
 import org.junit.Test;
+
+import static com.google.common.truth.Truth.assertThat;
 import static com.google.common.truth.Truth.assertWithMessage;
 
 /** A suite of tests for IntList. */
@@ -154,10 +156,24 @@ public class IntListTest {
     @Test
     public void testCatenate() {
         // TODO: Add tests
+        IntList L1 = IntList.of(1, 2, 3);
+        IntList L2 = IntList.of(4, 5, 6);
+        IntList L3 = IntList.catenate(L1, L2);
+
+        assertThat(L1).isEqualTo(IntList.of(1, 2, 3));
+        assertThat(L2).isEqualTo(IntList.of(4, 5, 6));
+        assertThat(L3).isEqualTo(IntList.of(1, 2, 3, 4, 5, 6));
     }
 
     @Test
     public void testDCatenate() {
         // TODO: Add test
+        IntList L1 = IntList.of(1, 2, 3);
+        IntList L2 = IntList.of(4, 5, 6);
+        IntList L3 = IntList.dcatenate(L1, L2);
+
+        assertThat(L1).isEqualTo(IntList.of(1, 2, 3, 4, 5, 6));
+        assertThat(L2).isEqualTo(IntList.of(4, 5, 6));
+        assertThat(L3).isEqualTo(IntList.of(1, 2, 3, 4, 5, 6));
     }
 }

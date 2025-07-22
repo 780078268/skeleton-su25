@@ -1,6 +1,9 @@
+import java.util.Objects;
+
 /** A data structure to represent a Linked List of Integers.
  * Each IntList represents one node in the overall Linked List.
  */
+
 
 public class IntList {
 
@@ -47,8 +50,20 @@ public class IntList {
      * @return The element at [position]
      */
     public int get(int position) {
-        // TODO: YOUR CODE HERE
-        return -1;
+        int a = 0;
+        IntList head = this;
+        if (position < 0) {
+            throw new IllegalArgumentException();
+        }
+
+        for (int i = position; i >= 0; i--) {
+            if (head == null) {
+                throw new IllegalArgumentException();
+            }
+            a = head.item;
+            head = head.next;
+        }
+        return a;
     }
 
     /**
@@ -58,8 +73,15 @@ public class IntList {
      * @return The String representation of the list.
      */
     public String toString() {
-        // TODO: YOUR CODE HERE
-        return null;
+        String a ="";
+        IntList head = this;
+        while(head.next != null) {
+            a=a+head.item;
+            a=a+" ";
+            head = head.next;
+        }
+        a=a+head.item;
+        return a;
     }
 
     /**
@@ -81,7 +103,10 @@ public class IntList {
             return false;
         }
         if (obj instanceof IntList otherList) {
-            // TODO: your code here
+            IntList thisList = this;
+            if (Objects.equals(otherList.toString(), thisList.toString())) {
+                return true;
+            }
 
         }
         return false;
@@ -93,7 +118,12 @@ public class IntList {
      * @param value, the int to be added.
      */
     public void add(int value) {
-        // TODO: YOUR CODE HERE
+        IntList last= new IntList(value,null);
+        IntList head = this;
+        while(head.next!=null){
+            head = head.next;
+        }
+        head.next=last;
     }
 
     /**
@@ -102,8 +132,16 @@ public class IntList {
      * @return smallest element in the list
      */
     public int smallest() {
-        // TODO: YOUR CODE HERE
-        return -1;
+        IntList head = this;
+        int min = head.item;
+        while(head.next != null) {
+            if(head.item<min) {
+                min = head.item;
+            }
+            head = head.next;
+        }
+        if(head.item<min) {min = head.item;}
+        return min;
     }
 
     /**
@@ -112,8 +150,14 @@ public class IntList {
      * @return The sum of squares of all elements.
      */
     public int squaredSum() {
-        // TODO: YOUR CODE HERE
-        return -1;
+        int sum = 0;
+        IntList head = this;
+        while(head.next != null) {
+            sum = sum + head.item*head.item;
+            head = head.next;
+        }
+        sum=sum+head.item*head.item;
+        return sum;
     }
 
     /**
@@ -170,8 +214,16 @@ public class IntList {
      * @return new list with A followed by B.
      */
     public static IntList catenate(IntList A, IntList B) {
-        // TODO: YOUR CODE HERE
-        return null;
+        IntList head = new IntList(A.item,null);
+        IntList cur = head;
+        A=A.next;
+        while (A != null) {
+            cur.next = new IntList(A.item,null);
+            A = A.next;
+            cur = cur.next;
+        }
+        cur.next = B;
+        return head;
     }
 
     /**
@@ -183,7 +235,11 @@ public class IntList {
      * @return new list with A followed by B.
      */
     public static IntList dcatenate(IntList A, IntList B) {
-        // TODO: YOUR CODE HERE
-        return null;
+        IntList currentA= A;
+        while (currentA.next != null) {
+            currentA= currentA.next;
+        }
+        currentA.next = B;
+        return A;
     }
 }
