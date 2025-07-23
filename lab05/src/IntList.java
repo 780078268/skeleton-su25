@@ -214,6 +214,12 @@ public class IntList {
      * @return new list with A followed by B.
      */
     public static IntList catenate(IntList A, IntList B) {
+        if(A==null){
+            return B;
+        }
+        if(B==null){
+            return A;
+        }
         IntList head = new IntList(A.item,null);
         IntList cur = head;
         A=A.next;
@@ -236,6 +242,13 @@ public class IntList {
      */
     public static IntList dcatenate(IntList A, IntList B) {
         IntList currentA= A;
+        if(A==null){
+            return B;
+        }
+        if(B==null){
+            return A;
+        }
+
         while (currentA.next != null) {
             currentA= currentA.next;
         }
