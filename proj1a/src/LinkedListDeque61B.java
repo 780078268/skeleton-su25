@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class LinkedListDeque61B<T>implements Deque61B<T> {
+public class LinkedListDeque61B<T> implements Deque61B<T> {
     Node sentinel;
     int size;
 
@@ -63,7 +63,7 @@ public class LinkedListDeque61B<T>implements Deque61B<T> {
 
     @Override
     public T removeFirst() {
-        if(size == 0){
+        if (size == 0) {
             return null;
         }
         Node current = sentinel.next;
@@ -75,7 +75,7 @@ public class LinkedListDeque61B<T>implements Deque61B<T> {
 
     @Override
     public T removeLast() {
-        if(size == 0){
+        if (size == 0) {
             return null;
         }
         Node current = sentinel.prev;
@@ -97,22 +97,21 @@ public class LinkedListDeque61B<T>implements Deque61B<T> {
             return current.item;
         }
     }
-    private T recursive(int index,Node current) {
+    private T recursive(int index, Node current) {
         current = current.next;
         if (index < 0 || index >= size) {
             return null;
         }
-        if(index == 0){
+        if (index == 0) {
             return current.item;
-        }
-        else{
+        } else {
             index--;
-            return recursive(index,current);
+            return recursive(index, current);
         }
 
     }
     @Override
     public T getRecursive(int index) {
-        return recursive(index,sentinel);
+        return recursive(index, sentinel);
     }
 }

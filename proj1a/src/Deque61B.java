@@ -1,5 +1,4 @@
 import java.util.List;
-
 /**
  * Created by hug on 2/4/2017. Methods are provided in the suggested order
  * that they should be completed.
