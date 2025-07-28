@@ -25,7 +25,7 @@ public class BooleanSet implements SimpleSet {
 
     /** Removes k from the set. */
     @Override
-    public void remove(int k) {if(k < 0 || k > contains.length || !contains[k]) {
+    public void remove(int k) {if(k < 0 || k >= contains.length || !contains[k]) {
         return;
     }
     contains[k] = false;
