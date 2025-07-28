@@ -35,6 +35,9 @@ public class BooleanSet implements SimpleSet {
     /** Return true if k is in this set, false otherwise. */
     @Override
     public boolean contains(int k) {
+        if(k < 0 || k >= contains.length || !contains[k]) {
+            return false;
+        }
         return contains[k];
     }
 
