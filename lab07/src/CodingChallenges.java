@@ -1,9 +1,5 @@
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-import java.util.List;
-import java.util.ArrayList;
+import java.lang.reflect.Array;
+import java.util.*;
 
 public class CodingChallenges {
 
@@ -13,7 +9,17 @@ public class CodingChallenges {
      */
     public static int missingNumber(int[] values) {
         // TODO
-        return -1;
+        Set<Integer> seen = new HashSet<>();
+        int N = values.length;
+        for (int value : values) {
+            seen.add(value);
+        }
+        for(int i = 0; i <= N; i++) {
+            if(!seen.contains(i)) {
+                return i;
+            }
+        }
+        return N;
     }
 
     /**
@@ -22,6 +28,14 @@ public class CodingChallenges {
      */
     public static boolean isPermutation(String s1, String s2) {
         // TODO
-        return false;
+        char[] c1 = s1.toCharArray();
+        char[] c2 = s2.toCharArray();
+        Arrays.sort(c1);
+        Arrays.sort(c2);
+        if(c1.length != c2.length) return false;
+        for(int i = 0; i < c1.length; i++) {
+            if(c1[i] != c2[i]) return false;
+        }
+        return true;
     }
 }
