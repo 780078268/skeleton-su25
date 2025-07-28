@@ -16,7 +16,7 @@ public class BooleanSet implements SimpleSet {
     /** Adds k to the set. */
     @Override
     public void add(int k) {
-        if(k < 0 || k > contains.length || contains[k]) {
+        if(k < 0 || k >= contains.length || contains[k]) {
             return;
         }
         contains[k] = true;

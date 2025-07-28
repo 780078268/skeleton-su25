@@ -108,7 +108,6 @@ public class LinkedListDeque61B<T> implements Deque61B<T> {
             index--;
             return recursive(index, current);
         }
-
     }
     @Override
     public T getRecursive(int index) {
