@@ -63,6 +63,6 @@ public class ListSet implements SimpleSet {
         for(int i = 0; i < elems.size(); i++) {
             arr[i] = elems.get(i);
         }
-        return toIntArray();
+        return arr;
     }
 }
