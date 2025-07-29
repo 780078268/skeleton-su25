@@ -196,4 +196,61 @@ public class ArrayDeque61BTest {
         assertThat(ad.size()).isEqualTo(0);
         assertThat(ad.isEmpty()).isTrue();
     }
+    @Test
+    /**
+     * [终极测试] 专门测试将队列移除至空后，再调用 addLast 的情况。
+     * 这对应 "add_last_after_remove_to_empty" flag。
+     */
+    public void addLastAfterRemovingToEmptyTest() {
+        Deque61B<Integer> ad = new ArrayDeque61B<>();
+        // 1. 添加一些元素
+        ad.addFirst(10);
+        ad.addFirst(20);
+        ad.addFirst(30);
+
+        // 2. 将它们全部移除
+        ad.removeLast();
+        ad.removeLast();
+        ad.removeLast();
+
+        // 3. 确认队列现在是空的
+        assertWithMessage("移除所有元素后，队列应该为空").that(ad.isEmpty()).isTrue();
+
+        // 4. 在空队列上调用 addLast
+        ad.addLast(50);
+
+        // 5. 检查状态是否正确
+        assertWithMessage("将空队列 addLast 后，size 应该为 1").that(ad.size()).isEqualTo(1);
+        assertWithMessage("将空队列 addLast 后，队列不应为空").that(ad.isEmpty()).isFalse();
+        assertWithMessage("将空队列 addLast 后，get(0) 应该返回新元素").that(ad.get(0)).isEqualTo(50);
+        assertThat(ad.toList()).containsExactly(50);
+    }
+
+    @Test
+    void testIntegrated1() {
+        Deque61B<Integer> ad = new ArrayDeque61B<>();
+        ad.addFirst(0);
+        ad.addFirst(1);
+        assertThat(ad.removeLast()).isEqualTo(0);
+        assertThat(ad.get(0)).isEqualTo(1);
+        ad.addLast(4);
+        ad.addFirst(5);
+        assertThat(ad.removeLast()).isEqualTo(4);
+        assertThat(ad.get(0)).isEqualTo(5);
+        ad.addFirst(8);
+        assertThat(ad.removeLast()).isEqualTo(1);
+        assertThat(ad.removeLast()).isEqualTo(5);
+        ad.addFirst(11);
+        ad.addLast(12);
+        ad.addLast(13);
+        assertThat(ad.removeFirst()).isEqualTo(11);
+        ad.addFirst(15);
+        ad.addFirst(16);
+        ad.addFirst(17);
+        assertThat(ad.removeFirst()).isEqualTo(17);
+        ad.addLast(19);
+        assertThat(ad.removeLast()).isEqualTo(19);
+        assertThat(ad.removeFirst()).isEqualTo(16);
+        assertThat(ad.removeLast()).isEqualTo(13);
+    }
 }

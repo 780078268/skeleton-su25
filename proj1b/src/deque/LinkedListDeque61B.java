@@ -170,12 +170,6 @@ public class LinkedListDeque61B<T> implements Deque61B<T> {
     }
     @Override
     public String toString() {
-        String returnString = "";
-        Node current = sentinel.next;
-        for(int i = 0; i < size; i++) {
-            returnString += current.item;
-            current = current.next;
-        }
-        return returnString;
+        return toList().toString();
     }
 }

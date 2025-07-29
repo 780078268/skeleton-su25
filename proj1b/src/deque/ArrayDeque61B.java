@@ -51,7 +51,7 @@ public class ArrayDeque61B<T> implements Deque61B<T> {
             newArr[nextFirst] = x;
             nextFirst = getlast(nextFirst);
             size++;
-            nextLast = size;
+            nextLast = size - 1;
             arr = newArr;
         } else {
             arr[nextFirst] = x;
@@ -235,10 +235,6 @@ public class ArrayDeque61B<T> implements Deque61B<T> {
     }
     @Override
     public String toString() {
-        String returnString = "";
-        for(int i = 0; i < size(); i++) {
-            returnString = returnString + get(i);
-        }
-        return returnString;
+        return toList().toString();
     }
 }
