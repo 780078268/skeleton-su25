@@ -1,7 +1,6 @@
 package deque;
 
-import deque.ArrayDeque61B;
-
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -39,11 +38,12 @@ public class LinkedListDeque61B<T> implements Deque61B<T> {
     }
 
     @Override
-    public void addLast(T x) {
+    public BigDecimal addLast(T x) {
         Node newNode = new Node(x, sentinel, sentinel.prev);
         sentinel.prev.next = newNode;
         sentinel.prev = newNode;
         size++;
+        return null;
     }
 
     @Override
@@ -129,15 +129,12 @@ public class LinkedListDeque61B<T> implements Deque61B<T> {
 
     private class LinkListDequeIterator implements Iterator<T> {
         Node current;
-
         public LinkListDequeIterator() {
             current = sentinel.next;
         }
-
         @Override
         public boolean hasNext() {
-            // 只要已经返回的元素数量小于队列的总大小，就说明还有元素
-            return current.next != sentinel;
+            return current != sentinel;
         }
 
         // 实现 next() 方法
@@ -154,17 +151,18 @@ public class LinkedListDeque61B<T> implements Deque61B<T> {
     }
     @Override
     public boolean equals(Object other) {
-        if(size != ((LinkedListDeque61B<?>)other).size()){
+        if (!(other instanceof Deque61B<?> o)) {
+            throw new java.lang.IllegalArgumentException("Not a Deque61B");
+        }
+        if (this.size() != o.size()) {
             return false;
         }
-        Node current = sentinel.next;
-        Node otherCurrent = ((LinkedListDeque61B)other).sentinel.next;
-        for(int i = 0; i < size; i++) {
-            if(current.item != otherCurrent.item){
+        Iterator<T> thisIterator = iterator();
+        Iterator<?> otherIterator = o.iterator();
+        while (thisIterator.hasNext() && otherIterator.hasNext()) {
+            if (thisIterator.next().equals(otherIterator.next())) {
                 return false;
             }
-            current = current.next;
-            otherCurrent = otherCurrent.next;
         }
         return true;
     }

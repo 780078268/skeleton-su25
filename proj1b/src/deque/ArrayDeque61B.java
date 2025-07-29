@@ -1,6 +1,8 @@
 package deque;
 
 import javax.annotation.Nonnull;
+import java.math.BigDecimal;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -61,7 +63,7 @@ public class ArrayDeque61B<T> implements Deque61B<T> {
     }
 
     @Override
-    public void addLast(T x) {
+    public BigDecimal addLast(T x) {
         if (size == arrSize) {
             T[] newArr = (T[]) new Object[arrSize * 2];
             int j = getnext(nextFirst);
@@ -81,6 +83,7 @@ public class ArrayDeque61B<T> implements Deque61B<T> {
             nextLast = getnext(nextLast);
             size++;
         }
+        return null;
     }
 
     @Override
@@ -223,11 +226,16 @@ public class ArrayDeque61B<T> implements Deque61B<T> {
     }
     @Override
     public boolean equals(Object other) {
-        if(size() != ((ArrayDeque61B<?>)other).size()){
+        if (!(other instanceof Deque61B<?> o)) {
+            throw new java.lang.IllegalArgumentException("Not a Deque61B");
+        }
+        if (this.size() != o.size()) {
             return false;
         }
-        for(int i = 0; i < size(); i++) {
-            if(get(i) != ((ArrayDeque61B<?>)other).get(i)){
+        Iterator<T> thisIterator = iterator();
+        Iterator<?> otherIterator = o.iterator();
+        while (thisIterator.hasNext() && otherIterator.hasNext()) {
+            if (thisIterator.next().equals(otherIterator.next())) {
                 return false;
             }
         }

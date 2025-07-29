@@ -1,5 +1,6 @@
 package deque;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -19,8 +20,9 @@ public interface Deque61B<T> extends Iterable<T> {
      * Add {@code x} to the back of the deque. Assumes {@code x} is never null.
      *
      * @param x item to add
+     * @return
      */
-    void addLast(T x);
+    BigDecimal addLast(T x);
 
     /**
      * Returns a List copy of the deque. Does not alter the deque.

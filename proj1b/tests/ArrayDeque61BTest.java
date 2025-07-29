@@ -11,7 +11,7 @@ import static com.google.common.truth.Truth.assertWithMessage;
 public class ArrayDeque61BTest {
 
     @Test
-    /** 测试最基本的功能：add, size, 和 isEmpty。 */
+    /* 测试最基本的功能：add, size, 和 isEmpty。 */
     public void addIsEmptySizeTest() {
         Deque61B<String> ad = new ArrayDeque61B<>();
         assertThat(ad.isEmpty()).isTrue();
@@ -23,7 +23,7 @@ public class ArrayDeque61BTest {
     }
 
     @Test
-    /** 测试 toList 方法在无环绕情况下的表现。 */
+    /* 测试 toList 方法在无环绕情况下的表现。 */
     public void toListTest() {
         Deque61B<Integer> ad = new ArrayDeque61B<>();
         ad.addLast(10);
@@ -34,7 +34,7 @@ public class ArrayDeque61BTest {
     }
 
     @Test
-    /** 测试 removeFirst 和 removeLast 的基本功能。 */
+    /* 测试 removeFirst 和 removeLast 的基本功能。 */
     public void removeTest() {
         Deque61B<Integer> ad = new ArrayDeque61B<>();
         ad.addLast(10);
@@ -48,7 +48,7 @@ public class ArrayDeque61BTest {
     }
 
     @Test
-    /** 测试 get 方法。 */
+    /* 测试 get 方法。 */
     public void getTest() {
         Deque61B<String> ad = new ArrayDeque61B<>();
         ad.addLast("a");
@@ -64,7 +64,7 @@ public class ArrayDeque61BTest {
     // ---------- 以下是你已有的缩放测试 (保持不变) ----------
 
     @Test
-    /** 测试当元素填满初始数组时，扩容 (Upsizing) 是否能正确工作。 */
+    /* 测试当元素填满初始数组时，扩容 (Upsizing) 是否能正确工作。 */
     public void addPastInitialCapacityShouldResizeUp() {
         Deque61B<Integer> ad = new ArrayDeque61B<>();
         for (int i = 0; i < 10; i++) {
@@ -77,7 +77,7 @@ public class ArrayDeque61BTest {
     }
 
     @Test
-    /** 测试在环形状态下触发扩容。 */
+    /* 测试在环形状态下触发扩容。 */
     public void addWithWrapAroundShouldResizeUp() {
         Deque61B<Integer> ad = new ArrayDeque61B<>();
         for (int i = 0; i < 8; i++) {
@@ -94,7 +94,7 @@ public class ArrayDeque61BTest {
     }
 
     @Test
-    /** 测试当元素大量移除后，缩容 (Downsizing) 是否能正确工作。 */
+    /* 测试当元素大量移除后，缩容 (Downsizing) 是否能正确工作。 */
     public void removePastThresholdShouldResizeDown() {
         Deque61B<Integer> ad = new ArrayDeque61B<>();
         for (int i = 0; i < 20; i++) {
@@ -121,7 +121,7 @@ public class ArrayDeque61BTest {
     }
 
     @Test
-    /** [新增] 测试移除最后一个元素后的状态。 */
+    /* [新增] 测试移除最后一个元素后的状态。 */
     public void removeLastElementMakesDequeEmptyTest() {
         Deque61B<Integer> ad = new ArrayDeque61B<>();
         ad.addFirst(5);
@@ -132,7 +132,7 @@ public class ArrayDeque61BTest {
     }
 
     @Test
-    /** [新增] 专门测试“在移除后添加”的场景。 */
+    /* [新增] 专门测试“在移除后添加”的场景。 */
     public void addAfterRemoveTest() {
         Deque61B<String> ad = new ArrayDeque61B<>();
         ad.addLast("a");
@@ -149,7 +149,7 @@ public class ArrayDeque61BTest {
     }
 
     @Test
-    /** [新增] 更复杂的“在移除后添加”场景，混合使用 addFirst 和 addLast。 */
+    /* [新增] 更复杂的“在移除后添加”场景，混合使用 addFirst 和 addLast。 */
     public void addAfterManyRemovalsTest() {
         Deque61B<Integer> ad = new ArrayDeque61B<>();
         // 1. 加满，使其环绕
@@ -171,7 +171,7 @@ public class ArrayDeque61BTest {
     }
 
     @Test
-    /** [新增] 综合测试，混合多种操作并持续检查 size 和 isEmpty。 */
+    /* [新增] 综合测试，混合多种操作并持续检查 size 和 isEmpty。 */
     public void comprehensiveMixedOperationsTest() {
         Deque61B<Integer> ad = new ArrayDeque61B<>();
         assertThat(ad.isEmpty()).isTrue();
@@ -197,9 +197,9 @@ public class ArrayDeque61BTest {
         assertThat(ad.isEmpty()).isTrue();
     }
     @Test
-    /**
-     * [终极测试] 专门测试将队列移除至空后，再调用 addLast 的情况。
-     * 这对应 "add_last_after_remove_to_empty" flag。
+    /*
+      [终极测试] 专门测试将队列移除至空后，再调用 addLast 的情况。
+      这对应 "add_last_after_remove_to_empty" flag。
      */
     public void addLastAfterRemovingToEmptyTest() {
         Deque61B<Integer> ad = new ArrayDeque61B<>();
@@ -252,5 +252,13 @@ public class ArrayDeque61BTest {
         assertThat(ad.removeLast()).isEqualTo(19);
         assertThat(ad.removeFirst()).isEqualTo(16);
         assertThat(ad.removeLast()).isEqualTo(13);
+    }
+    @Test
+    void testIntegrated2() {
+        Deque61B<Integer> ad = new ArrayDeque61B<>();
+        ad.addFirst(11);
+        ad.removeLast();
+        ad.addFirst(12);
+        assertThat(ad.get(0)).isEqualTo(12);
     }
 }
