@@ -1,6 +1,6 @@
 package deque;
 
-import java.util.ArrayDeque;
+import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -170,14 +170,16 @@ public class ArrayDeque61B<T> implements Deque61B<T> {
 
     @Override
     public T get(int index) {
-        if (index < 0 || index >= size) {
+        if (index < 0 ) {
             return null;
         }
-        int j = nextFirst;
+        int current = nextFirst;
+        T temp = arr[current];
         for (int i = 0; i <= index; i++) {
-            j = getnext(j);
+            current = getnext(current);
+            temp = arr[current];
         }
-        return arr[j];
+        return temp;
     }
 
     @Override
@@ -186,8 +188,9 @@ public class ArrayDeque61B<T> implements Deque61B<T> {
     }
 
     @Override
+    @Nonnull
     public Iterator<T> iterator() {
-        return iterator();
+        return new ArrayDequeIterator();
     }
 
     private class ArrayDequeIterator implements Iterator<T> {
