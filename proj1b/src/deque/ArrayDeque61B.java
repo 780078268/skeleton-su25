@@ -1,7 +1,6 @@
 package deque;
 
 import javax.annotation.Nonnull;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -51,8 +50,8 @@ public class ArrayDeque61B<T> implements Deque61B<T> {
             nextFirst = arrSize - 1;
             newArr[nextFirst] = x;
             nextFirst = arrSize - 2;
-            size++;
             nextLast = size;
+            size++;
             arr = newArr;
         } else {
             arr[nextFirst] = x;
@@ -171,16 +170,13 @@ public class ArrayDeque61B<T> implements Deque61B<T> {
 
     @Override
     public T get(int index) {
-        if (index < 0) {
+        // 1. 首先，进行完整的边界检查
+        if (index < 0 || index >= size) {
             return null;
         }
-        int current = nextFirst;
-        T temp = arr[current];
-        for (int i = 0; i <= index; i++) {
-            current = getnext(current);
-            temp = arr[current];
-        }
-        return temp;
+        int firstElementIndex = getnext(nextFirst);
+        int targetIndex = (firstElementIndex + index) % arrSize;
+        return arr[targetIndex];
     }
 
     @Override
