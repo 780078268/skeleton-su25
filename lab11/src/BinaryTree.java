@@ -1,6 +1,6 @@
 import org.antlr.v4.runtime.tree.Tree;
 import org.w3c.dom.Node;
-
+import java.util.List;
 import java.util.ArrayList;
 
 public class BinaryTree<T> {
@@ -52,8 +52,24 @@ public class BinaryTree<T> {
     }
 
     /** Optional constructor, see optional exercise in lab (or last week's theoretical lab). */
-    public BinaryTree(ArrayList<T> pre, ArrayList<T> in) {
+    public BinaryTree(List<T> pre, List<T> in) {
+        root = buildTreeHelper(pre, in);
 
+    }
+    private TreeNode<T> buildTreeHelper(List<T> pre, List<T> in) {
+        if (pre.isEmpty()) {
+            return null;
+        }
+        T rootItem = pre.get(0);
+        TreeNode root = new TreeNode(rootItem);
+        int inorderIndex = in.indexOf(rootItem);
+        List<T> leftPreorder = pre.subList(1, inorderIndex + 1);
+        List<T> leftInorder = in.subList(0, inorderIndex);
+        root.left = buildTreeHelper( leftPreorder,  leftInorder);
+        List<T> rightPreorder = pre.subList(inorderIndex + 1, pre.size());
+        List<T> rightInorder = in.subList(inorderIndex + 1, in.size());
+        root.right = buildTreeHelper(rightPreorder, rightInorder);
+        return root;
     }
 
     /* Print the values in the tree in preorder. */
