@@ -51,9 +51,9 @@ public class ArrayDeque61B<T> implements Deque61B<T> {
             arrSize = arrSize * 2;
             nextFirst = arrSize - 1;
             newArr[nextFirst] = x;
-            nextFirst = getlast(nextFirst);
+            nextFirst = arrSize-2;
             size++;
-            nextLast = size - 1;
+            nextLast = size;
             arr = newArr;
         } else {
             arr[nextFirst] = x;
@@ -235,7 +235,7 @@ public class ArrayDeque61B<T> implements Deque61B<T> {
         Iterator<T> thisIterator = iterator();
         Iterator<?> otherIterator = o.iterator();
         while (thisIterator.hasNext() && otherIterator.hasNext()) {
-            if (thisIterator.next().equals(otherIterator.next())) {
+            if (!thisIterator.next().equals(otherIterator.next())) {
                 return false;
             }
         }

@@ -1,12 +1,15 @@
 package src;
 
+import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.Iterator;
-
+import java.util.NoSuchElementException;
+import java.util.Stack;
+import java.util.Queue;
+import java.util.LinkedList;
 /* An src.AmoebaFamily is a tree, where nodes are Amoebas, each of which can have
    any number of children. */
 public class AmoebaFamily implements Iterable<AmoebaFamily.Amoeba> {
-
     /* ROOT is the root amoeba of this src.AmoebaFamily */
     private Amoeba root = null;
 
@@ -34,13 +37,16 @@ public class AmoebaFamily implements Iterable<AmoebaFamily.Amoeba> {
 
     /* Returns the longest name in this src.AmoebaFamily. */
     public String longestName() {
-        // TODO: YOUR CODE HERE
+        if (root != null) {
+            return root.longestNameHelper();
+        }
         return "";
     }
 
     /* Returns an Iterator for this src.AmoebaFamily. */
+    @Nonnull
     public Iterator<Amoeba> iterator() {
-        return new AmoebaDFSIterator();
+        return new AmoebaDFSIterator(root);
     }
 
     /* Creates a new src.AmoebaFamily and prints it out. */
@@ -59,15 +65,16 @@ public class AmoebaFamily implements Iterable<AmoebaFamily.Amoeba> {
         family.addChild("Marge", "Bill");
         family.addChild("Marge", "Hilary");
         System.out.println("Here's the family!");
-        // Optional TODO: use the iterator to print out the family!
+        for (Amoeba familyName : family) {
+            System.out.println(familyName);
+        }
     }
 
     /* An Amoeba is a node of an src.AmoebaFamily. */
     public static class Amoeba {
-
-        private String name;
-        private Amoeba parent;
-        private ArrayList<Amoeba> children;
+        private final String name;
+        private final Amoeba parent;
+        private final ArrayList<Amoeba> children;
 
         public Amoeba(String name, Amoeba parent) {
             this.name = name;
@@ -104,38 +111,57 @@ public class AmoebaFamily implements Iterable<AmoebaFamily.Amoeba> {
         public int longestNameLengthHelper() {
             int maxLengthSeen = name.length();
             for (Amoeba a : children) {
-                maxLengthSeen = Math.max(maxLengthSeen,
-                                         a.longestNameLengthHelper());
+                maxLengthSeen = Math.max(maxLengthSeen, a.longestNameLengthHelper());
             }
             return maxLengthSeen;
         }
 
-        // POSSIBLE HELPER FUNCTIONS HERE
+        public String longestNameHelper() {
+            String maxStringSeen = name;
+            for (Amoeba a : children) {
+                String s = a.longestNameHelper();
+                if (s.length() > maxStringSeen.length()) {
+                    maxStringSeen = s;
+                }
+            }
+            return maxStringSeen;
+        }
+
+        /* An Iterator class for the src.AmoebaFamily, running a DFS traversal on the
+           src.AmoebaFamily. Complete enumeration of a family of N Amoebas should take
+           O(N) operations. */
 
     }
-
-    /* An Iterator class for the src.AmoebaFamily, running a DFS traversal on the
-       src.AmoebaFamily. Complete enumeration of a family of N Amoebas should take
-       O(N) operations. */
-    public class AmoebaDFSIterator implements Iterator<Amoeba> {
-
-        // Optional TODO: IMPLEMENT THE CLASS HERE
+    public static class AmoebaDFSIterator implements Iterator<Amoeba> {
+        private final Stack<Amoeba> fringe;
 
         /* AmoebaDFSIterator constructor. Sets up all of the initial information
            for the AmoebaDFSIterator. */
-        public AmoebaDFSIterator() {
+        public AmoebaDFSIterator(Amoeba root) {
+            fringe = new Stack<Amoeba>();
+            if(root != null) {
+                fringe.push(root);
+            }
         }
 
         /* Returns true if there is a next element to return. */
         public boolean hasNext() {
-            return false;
+            return !fringe.isEmpty();
         }
 
         /* Returns the next element. */
         public Amoeba next() {
-            return null;
+            if (!hasNext()) {
+                throw new NoSuchElementException("Ran out of elements");
+            }
+            Amoeba next = fringe.pop();
+            for (int i = next.children.size() - 1; i >= 0; i--) {
+                if (next.children.get(i) != null) {
+                    fringe.push(next.children.get(i));
+                }
+            }
+            return next;
         }
-
         public void remove() {
             throw new UnsupportedOperationException();
         }
@@ -145,26 +171,38 @@ public class AmoebaFamily implements Iterable<AmoebaFamily.Amoeba> {
        src.AmoebaFamily. Complete enumeration of a family of N Amoebas should take
        O(N) operations. */
     public class AmoebaBFSIterator implements Iterator<Amoeba> {
-
-        // Optional TODO: IMPLEMENT THE CLASS HERE
-
         /* AmoebaBFSIterator constructor. Sets up all of the initial information
            for the AmoebaBFSIterator. */
-        public AmoebaBFSIterator() {
+        private Queue<Amoeba> fringe;
+
+        public AmoebaBFSIterator(Amoeba root) {
+            fringe = new LinkedList<Amoeba>();
+            if (root != null) {
+                fringe.add(root);
+            }
         }
 
         /* Returns true if there is a next element to return. */
         public boolean hasNext() {
-            return false;
+            return !fringe.isEmpty();
         }
 
         /* Returns the next element. */
         public Amoeba next() {
-            return null;
+            if (!hasNext()) {
+                throw new NoSuchElementException("Ran out of elements");
+            }
+            Amoeba next = fringe.remove();
+            for (int i = 0; i < next.children.size(); i++) {
+                if (next.children.get(i) != null) {
+                    fringe.add(next.children.get(i));
+                }
+            }
+            return next;
         }
-
         public void remove() {
             throw new UnsupportedOperationException();
         }
     }
 }
+

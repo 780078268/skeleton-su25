@@ -160,7 +160,7 @@ public class LinkedListDeque61B<T> implements Deque61B<T> {
         Iterator<T> thisIterator = iterator();
         Iterator<?> otherIterator = o.iterator();
         while (thisIterator.hasNext() && otherIterator.hasNext()) {
-            if (thisIterator.next().equals(otherIterator.next())) {
+            if (!thisIterator.next().equals(otherIterator.next())) {
                 return false;
             }
         }
