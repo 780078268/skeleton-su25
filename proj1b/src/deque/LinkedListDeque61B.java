@@ -152,7 +152,7 @@ public class LinkedListDeque61B<T> implements Deque61B<T> {
     @Override
     public boolean equals(Object other) {
         if (!(other instanceof Deque61B<?> o)) {
-            throw new java.lang.IllegalArgumentException("Not a Deque61B");
+            return false;
         }
         if (this.size() != o.size()) {
             return false;

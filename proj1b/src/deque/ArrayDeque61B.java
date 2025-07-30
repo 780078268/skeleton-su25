@@ -2,7 +2,6 @@ package deque;
 
 import javax.annotation.Nonnull;
 import java.math.BigDecimal;
-import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -51,7 +50,7 @@ public class ArrayDeque61B<T> implements Deque61B<T> {
             arrSize = arrSize * 2;
             nextFirst = arrSize - 1;
             newArr[nextFirst] = x;
-            nextFirst = arrSize-2;
+            nextFirst = arrSize - 2;
             size++;
             nextLast = size;
             arr = newArr;
@@ -173,7 +172,7 @@ public class ArrayDeque61B<T> implements Deque61B<T> {
 
     @Override
     public T get(int index) {
-        if (index < 0 ) {
+        if (index < 0) {
             return null;
         }
         int current = nextFirst;
@@ -227,7 +226,7 @@ public class ArrayDeque61B<T> implements Deque61B<T> {
     @Override
     public boolean equals(Object other) {
         if (!(other instanceof Deque61B<?> o)) {
-            throw new java.lang.IllegalArgumentException("Not a Deque61B");
+            return false;
         }
         if (this.size() != o.size()) {
             return false;

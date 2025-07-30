@@ -1,3 +1,6 @@
+import org.antlr.v4.runtime.tree.Tree;
+import org.w3c.dom.Node;
+
 import java.util.ArrayList;
 
 public class BinaryTree<T> {
@@ -29,6 +32,7 @@ public class BinaryTree<T> {
         public TreeNode<T> getRight() {
             return right;
         }
+
     }
 
     // protected gives subclasses the ability to access this instance variable,
@@ -48,7 +52,9 @@ public class BinaryTree<T> {
     }
 
     /** Optional constructor, see optional exercise in lab (or last week's theoretical lab). */
-    public BinaryTree(ArrayList<T> pre, ArrayList<T> in) { }
+    public BinaryTree(ArrayList<T> pre, ArrayList<T> in) {
+
+    }
 
     /* Print the values in the tree in preorder. */
     public void printPreorder() {
@@ -89,6 +95,17 @@ public class BinaryTree<T> {
         printInorderHelper(node.left);
         System.out.print(node.item + " ");
         printInorderHelper(node.right);
+    }
+    public int height() {
+        return heightHelper(root);
+    }
+    int heightHelper(TreeNode<T> node) {
+        if (node == null) {
+            return 0;
+        }
+        int leftHeight = heightHelper(node.left);
+        int rightHeight = heightHelper(node.right);
+        return Math.max(leftHeight, rightHeight) + 1;
     }
 
     /* Prints out the contents of a BinaryTree with a description in both
@@ -156,22 +173,39 @@ public class BinaryTree<T> {
     }
 
     /* Returns the height of the tree. */
-    public int height() {
-        // TODO: YOUR CODE HERE
-        return 0;
-    }
+
 
     /* Returns true if the tree's left and right children are the same height
        and are themselves completely balanced. */
     public boolean isCompletelyBalanced() {
-        // TODO: YOUR CODE HERE
+        return isCompletelyBalancedHelper(root);
+    }
+    public boolean isCompletelyBalancedHelper(TreeNode<T> node) {
+        if (node == null) {
+            return true;
+        }
+        else if(node.left == null || node.right == null) {
+            return true;
+        } else if (heightHelper(node.left) == heightHelper(node.right)) {
+            return isCompletelyBalancedHelper(node.left) && isCompletelyBalancedHelper(node.right);
+        }
         return false;
     }
 
     /* Returns a BinaryTree representing the Fibonacci calculation for N. */
     public static BinaryTree<Integer> fibTree(int N) {
-        BinaryTree<Integer> result = new BinaryTree<Integer>();
-        // TODO: YOUR CODE HERE
-        return null;
+        if (N == 0) {
+            return new BinaryTree<>(new TreeNode<>(0));
+        }
+        if (N == 1) {
+            return new BinaryTree<>(new TreeNode<>(1));
+        }
+        else {
+            BinaryTree<Integer> left = fibTree(N - 1);
+            BinaryTree<Integer> right = fibTree(N - 2);
+            int rootValue = left.root.item+right.root.item;
+            TreeNode<Integer> root = new TreeNode<>(rootValue,left.root,right.root);
+            return new BinaryTree<>(root);
+        }
     }
 }
