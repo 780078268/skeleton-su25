@@ -22,7 +22,7 @@ public interface Deque61B<T> extends Iterable<T> {
      * @param x item to add
      * @return
      */
-    BigDecimal addLast(T x);
+    void addLast(T x);
 
     /**
      * Returns a List copy of the deque. Does not alter the deque.

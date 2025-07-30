@@ -62,7 +62,7 @@ public class ArrayDeque61B<T> implements Deque61B<T> {
     }
 
     @Override
-    public BigDecimal addLast(T x) {
+    public void addLast(T x) {
         if (size == arrSize) {
             T[] newArr = (T[]) new Object[arrSize * 2];
             int j = getnext(nextFirst);
@@ -82,7 +82,6 @@ public class ArrayDeque61B<T> implements Deque61B<T> {
             nextLast = getnext(nextLast);
             size++;
         }
-        return null;
     }
 
     @Override

@@ -38,12 +38,11 @@ public class LinkedListDeque61B<T> implements Deque61B<T> {
     }
 
     @Override
-    public BigDecimal addLast(T x) {
+    public void addLast(T x) {
         Node newNode = new Node(x, sentinel, sentinel.prev);
         sentinel.prev.next = newNode;
         sentinel.prev = newNode;
         size++;
-        return null;
     }
 
     @Override
