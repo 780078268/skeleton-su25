@@ -20,9 +20,17 @@ public class GuitarString {
 
     /* Create a guitar string of the given frequency.  */
     public GuitarString(double frequency) {
-        int capacity = (int) Math.round(frequency /SR);
+        // 正确的计算公式应该是采样率 SR 除以频率 frequency
+        int capacity = (int) Math.round(SR / frequency);
+
+        // 如果容量小于1，这会导致一个空的 buffer，是不对的。
+        // 我们可以强制让它至少为1，尽管对于非常高的频率这在物理上可能不精确，但可以避免程序崩溃。
+        if (capacity < 1) {
+            capacity = 1;
+        }
+
         buffer = new ArrayDeque61B<Double>();
-        for(int i = 0; i < capacity; i++){
+        for (int i = 0; i < capacity; i++) {
             buffer.addLast(0.0);
         }
     }
@@ -30,39 +38,41 @@ public class GuitarString {
 
     /* Pluck the guitar string by replacing the buffer with white noise. */
     public void pluck() {
-        // TODO: Dequeue everything in buffer, and replace with random numbers
-        //       between -0.5 and 0.5. You can get such a number by using:
-        //       double r = Math.random() - 0.5;
-        for(int j=0; j < buffer.size(); j++){
-            buffer.removeLast();
+        // 获取 buffer 的容量
+        int capacity = buffer.size();
+
+        // 正确地清空 buffer
+        for (int i = 0; i < capacity; i++) {
+            buffer.removeFirst();
         }
-        for(int i = 0; i < buffer.size(); i++){
+
+        // 正确地用随机数填满 buffer
+        for (int i = 0; i < capacity; i++) {
             buffer.addLast(Math.random() - 0.5);
         }
-        //
-        //       Make sure that your random numbers are different from each
-        //       other. This does not mean that you need to check that the numbers
-        //       are different from each other. It means you should repeatedly call
-        //       Math.random() - 0.5 to generate new random numbers for each array index.
     }
 
     /* Advance the simulation one time step by performing one iteration of
      * the Karplus-Strong algorithm.
      */
     public void tic() {
-        // TODO: Dequeue the front sample and enqueue a new sample that is
-        //       the average of the two multiplied by the DECAY factor.
-        //       **Do not call StdAudio.play().**
-        double temp = buffer.get(0);
-        temp += buffer.get(1);
-        buffer.removeFirst();
-        buffer.addLast(temp/2*0.996);
+        // 1. 先取出队首的样本
+        double frontSample = buffer.removeFirst();
+
+        // 2. 获取新的队首样本 (原来的第二个)
+        double secondSample = buffer.get(0);
+
+        // 3. 计算新的样本并添加到队尾
+        double newSample = (frontSample + secondSample) * 0.5 * DECAY;
+        buffer.addLast(newSample);
     }
+
+
+    /* Return the double at the front of the buffer. */
+
 
     /* Return the double at the front of the buffer. */
     public double sample() {
-        // TODO: Return the correct thing.
         return buffer.get(0);
     }
 }
-    // TODO: Remove all comments that say TODO when you're done.
