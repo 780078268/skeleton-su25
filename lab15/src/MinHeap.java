@@ -6,7 +6,6 @@ public class MinHeap<E extends Comparable<E>> {
     /* An ArrayList that stores the elements in this MinHeap. */
     private ArrayList<E> contents;
     private int size;
-    // TODO: YOUR CODE HERE (no code should be needed here if not implementing the more optimized version)
 
     /* Initializes an empty MinHeap. */
     public MinHeap() {
