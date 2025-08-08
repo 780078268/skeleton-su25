@@ -177,36 +177,8 @@ public class Graph implements Iterable<Integer> {
     /* Returns the path from START to STOP. If no path exists, returns an empty
        List. If START == STOP, returns a List with START. */
     public List<Integer> path(int start, int stop) {
-        LinkedList<Integer> resultPath = new LinkedList<>();
-        int[] edgeTo = new int[vertexCount];
-        boolean[] visited = new boolean[vertexCount];
-        Stack<Integer> stack = new Stack<>();
-        stack.push(start);
-        visited[start] = true;
-        boolean pathFound = false;
-        while (!stack.isEmpty()) {
-            int current = stack.pop();
-            if (current == stop) {
-                pathFound = true;
-                break;
-            }
-            for (Edge e : adjLists[current]) {
-                if (!visited[e.to]) {
-                    edgeTo[e.to] = current;
-                    stack.push(e.to);
-                    visited[e.to] = true;
-                }
-            }
-        }
-        if (pathFound) {
-            for (int at = stop; ; at = edgeTo[at]) {
-                resultPath.addFirst(at);
-                if (at == start) {
-                    break;
-                }
-            }
-        }
-        return resultPath;
+        // TODO: YOUR CODE HERE
+        return null;
     }
 
     public List<Integer> topologicalSort() {
@@ -226,15 +198,7 @@ public class Graph implements Iterable<Integer> {
 
         TopologicalIterator() {
             fringe = new Stack<Integer>();
-            currentInDegree = new int[vertexCount];
-            for (int i = 0; i < vertexCount; i++) {
-                currentInDegree[i] = inDegree(i);
-            }
-            for (int v = 0; v < vertexCount; v++) {
-                if (currentInDegree[v] == 0) {
-                    fringe.push(v);
-                }
-            }
+            // TODO: YOUR CODE HERE
         }
 
         public boolean hasNext() {
@@ -242,14 +206,8 @@ public class Graph implements Iterable<Integer> {
         }
 
         public Integer next() {
-            int curr = fringe.pop();
-            for (Integer i : neighbors(curr)) {
-                currentInDegree[i]--;
-                if (currentInDegree[i] == 0) {
-                    fringe.push(i);
-                }
-            }
-            return curr;
+            // TODO: YOUR CODE HERE
+            return 0;
         }
 
         public void remove() {
