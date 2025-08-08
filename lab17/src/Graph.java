@@ -30,6 +30,11 @@ public class Graph implements Iterable<Integer> {
        Edge already exists, replaces the current Edge with a new Edge with
        weight WEIGHT. */
     public void addEdge(int v1, int v2, int weight) {
+        for(Edge e : adjLists[v1]) {
+            if(e.to == v2) {
+                e.weight = weight;
+            }
+        }
         Edge e = new Edge(v1, v2, weight);
         adjLists[v1].add(e);
     }

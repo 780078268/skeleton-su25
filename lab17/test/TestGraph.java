@@ -153,4 +153,16 @@ public class TestGraph {
         assertWithMessage("Topological sort of a cyclic graph should be incomplete")
                 .that(sorted.size()).isLessThan(4);
     }
+
+    @Test
+    public void testPathOnCompleteUndirectedGraph() {
+        int vertexCount = 20;
+        Graph g = new Graph(vertexCount);
+        for (int i = 0; i < vertexCount; ++i)
+            for (int j = i + 1; j < vertexCount; ++j)
+                g.addUndirectedEdge(i, j);
+
+        List<Integer> path = g.path(0, vertexCount / 2);
+        assertWithMessage(path.toString()).that(path.size()).isGreaterThan(1);
+    }
 }
