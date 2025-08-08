@@ -33,6 +33,7 @@ public class Graph implements Iterable<Integer> {
         for(Edge e : adjLists[v1]) {
             if(e.to == v2) {
                 e.weight = weight;
+                return;
             }
         }
         Edge e = new Edge(v1, v2, weight);
