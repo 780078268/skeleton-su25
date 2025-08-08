@@ -156,15 +156,11 @@ public class Graph implements Iterable<Integer> {
     /* Returns true iff there exists a path from START to STOP. Assumes both
        START and STOP are in this graph. If START == STOP, returns true. */
     public boolean pathExists(int start, int stop) {
-        Iterator<Integer> iter = new DFSIterator(start);
-        if (!iter.hasNext()) {
-            return false;
-        }
         if (start == stop) {
             return true;
         }
-        while (iter.hasNext()) {
-            if (iter.next() == stop) {
+        for (int vertex : dfs(start)) {
+            if (vertex == stop) {
                 return true;
             }
         }
