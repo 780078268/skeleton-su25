@@ -192,6 +192,7 @@ public class Graph implements Iterable<Integer> {
                 if (!visited[e.to]) {
                     edgeTo[e.to] = current;
                     stack.push(e.to);
+                    visited[e.to] = true;
                 }
             }
         }
