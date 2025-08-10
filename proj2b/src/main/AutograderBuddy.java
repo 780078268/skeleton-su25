@@ -19,6 +19,6 @@ public class AutograderBuddy {
         NGramMap ngm = new NGramMap(wordFile, countFile);
 
         // 3. 创建并返回一个初始化好的 HyponymsHandler
-        return new HyponymsHandler(wn,ngm);
+        return new HyponymsHandler(wn, ngm);
     }
 }

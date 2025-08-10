@@ -22,7 +22,7 @@ public class HyponymsHandler extends NgordnetQueryHandler {
         int start = q.startYear();
         int end = q.endYear();
         List<String> words =  q.words();
-        if(words.isEmpty()){
+        if (words.isEmpty()) {
             return "[]";
         }
         Set<String> commonHyponyms = new HashSet<>(wordnet.hyponyms(words.get(0)));
@@ -64,7 +64,6 @@ public class HyponymsHandler extends NgordnetQueryHandler {
             returnList = sortedList;
         }
         List<String> finalReturnList = returnList;
-        Collections.sort(finalReturnList);
-        return finalReturnList.toString();
+        return new ArrayList<>(returnList).toString();
     }
 }

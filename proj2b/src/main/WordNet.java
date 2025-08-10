@@ -12,7 +12,16 @@ public class WordNet {
         wordsToIds = new HashMap<>();
         In in1 = new In(synsetsFile);
         In in2 = new In(hyponymsFile);
-        int numNodes = 0;
+        int maxId = -1;
+        In inSynsets = new In(synsetsFile);
+        while (inSynsets.hasNextLine()) {
+            String line = inSynsets.readLine();
+            String[] parts = line.split(",", 3);
+            int currentId = Integer.parseInt(parts[0]);
+            if (currentId > maxId) {
+                maxId = currentId;
+            }
+        }
         while (in1.hasNextLine()) {
             String line = in1.readLine();
             String[] parts = line.split(",", 3);
@@ -25,9 +34,8 @@ public class WordNet {
                 }
                 wordsToIds.get(singleWord).add(id);
             }
-            numNodes++;
         }
-        this.graph = new Graph(numNodes);
+        this.graph = new Graph(maxId);
         while (in2.hasNextLine()) {
             String line = in2.readLine();
             String[] words = line.split(",");
