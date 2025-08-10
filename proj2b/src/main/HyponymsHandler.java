@@ -64,6 +64,7 @@ public class HyponymsHandler extends NgordnetQueryHandler {
             returnList = sortedList;
         }
         List<String> finalReturnList = returnList;
+        Collections.sort(returnList);
         return new ArrayList<>(returnList).toString();
     }
 }

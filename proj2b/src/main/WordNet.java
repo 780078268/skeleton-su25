@@ -14,11 +14,19 @@ public class WordNet {
         In in2 = new In(hyponymsFile);
         int maxId = -1;
         In inSynsets = new In(synsetsFile);
+        In synsetsReader = new In(synsetsFile);
+        while (synsetsReader.hasNextLine()) {
+            String[] parts = synsetsReader.readLine().split(",", 2);
+            int currentId = Integer.parseInt(parts[0]);
+            if (currentId > maxId) {
+                maxId = currentId;
+            }
+        }
         while (inSynsets.hasNextLine()) {
             String line = inSynsets.readLine();
             String[] parts = line.split(",", 3);
             int currentId = Integer.parseInt(parts[0]);
-            if (currentId > maxId+1) {
+            if (currentId > maxId) {
                 maxId = currentId;
             }
         }
@@ -35,7 +43,7 @@ public class WordNet {
                 wordsToIds.get(singleWord).add(id);
             }
         }
-        this.graph = new Graph(maxId);
+        this.graph = new Graph(maxId +1);
         while (in2.hasNextLine()) {
             String line = in2.readLine();
             String[] words = line.split(",");
