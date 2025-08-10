@@ -8,12 +8,14 @@ public class WordNet {
     private final Graph graph;
     private final Map<Integer, LinkedList<String>> idToWords = new HashMap<>();
     private  Map<String, LinkedList<Integer>> wordsToIds;
+    // 文件: WordNet.java (最终正确版本)
+
     public WordNet(String synsetsFile, String hyponymsFile) {
         wordsToIds = new HashMap<>();
-        In in1 = new In(synsetsFile);
-        In in2 = new In(hyponymsFile);
         int maxId = -1;
-        In inSynsets = new In(synsetsFile);
+
+        // --- 步骤 1: 遍历两个文件来找到真正的最大 ID ---
+        // 遍历 synsets 文件
         In synsetsReader = new In(synsetsFile);
         while (synsetsReader.hasNextLine()) {
             String[] parts = synsetsReader.readLine().split(",", 2);
@@ -22,16 +24,26 @@ public class WordNet {
                 maxId = currentId;
             }
         }
-        while (inSynsets.hasNextLine()) {
-            String line = inSynsets.readLine();
-            String[] parts = line.split(",", 3);
-            int currentId = Integer.parseInt(parts[0]);
-            if (currentId > maxId) {
-                maxId = currentId;
+
+        // 遍历 hyponyms 文件，检查每一行的所有ID
+        In hyponymsReader = new In(hyponymsFile);
+        while (hyponymsReader.hasNextLine()) {
+            String[] parts = hyponymsReader.readLine().split(",");
+            for (String part : parts) {
+                int currentId = Integer.parseInt(part);
+                if (currentId > maxId) {
+                    maxId = currentId;
+                }
             }
         }
-        while (in1.hasNextLine()) {
-            String line = in1.readLine();
+
+        // --- 步骤 2: 使用找到的真正最大ID来初始化图 ---
+        this.graph = new Graph(maxId + 1);
+
+        // --- 步骤 3: 填充数据结构 ---
+        In synsetsReader2 = new In(synsetsFile);
+        while (synsetsReader2.hasNextLine()) {
+            String line = synsetsReader2.readLine();
             String[] parts = line.split(",", 3);
             int id = Integer.parseInt(parts[0]);
             String[] synsetWords = parts[1].split(" ");
@@ -43,9 +55,11 @@ public class WordNet {
                 wordsToIds.get(singleWord).add(id);
             }
         }
-        this.graph = new Graph(maxId +1);
-        while (in2.hasNextLine()) {
-            String line = in2.readLine();
+
+        // --- 步骤 4: 添加图的边 ---
+        In hyponymsReader2 = new In(hyponymsFile);
+        while (hyponymsReader2.hasNextLine()) {
+            String line = hyponymsReader2.readLine();
             String[] words = line.split(",");
             int from = Integer.parseInt(words[0]);
             for (int i = 1; i < words.length; i++) {
