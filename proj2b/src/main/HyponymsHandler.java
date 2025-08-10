@@ -22,7 +22,7 @@ public class HyponymsHandler extends NgordnetQueryHandler {
         int start = q.startYear();
         int end = q.endYear();
         List<String> words =  q.words();
-        String word = words.getFirst();
+        String word = words.get(0);
         Set<String> hyponymSet = wordnet.hyponyms(word);
         LinkedList<String> hyponymList = new LinkedList<>(hyponymSet);
         Collections.sort(hyponymList);
