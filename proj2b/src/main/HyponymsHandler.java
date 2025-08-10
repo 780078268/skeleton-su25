@@ -30,8 +30,7 @@ public class HyponymsHandler extends NgordnetQueryHandler {
             commonHyponyms.retainAll(wordnet.hyponyms(words.get(j)));
         }
         if (i == 0) {
-            LinkedList<String> sortedList = new LinkedList<>(commonHyponyms);
-            Collections.sort(sortedList);
+            Set<String> sortedList = new TreeSet<>(commonHyponyms);
             return sortedList.toString();
         }
         HashMap<String, Double> dataMap = new HashMap<>(commonHyponyms.size());
@@ -64,7 +63,6 @@ public class HyponymsHandler extends NgordnetQueryHandler {
             returnList = sortedList;
         }
         List<String> finalReturnList = returnList;
-        Collections.sort(returnList);
-        return new ArrayList<>(returnList).toString();
+        return finalReturnList.toString();
     }
 }
