@@ -9,7 +9,7 @@ import java.util.*;
 
 public class HyponymsHandler extends NgordnetQueryHandler {
     private final WordNet wordnet;
-    private final NGramMap ngramMap ;
+    private final NGramMap ngramMap;
 
     public HyponymsHandler(WordNet wn, NGramMap ngramMap) {
         this.wordnet = wn;
@@ -26,24 +26,24 @@ public class HyponymsHandler extends NgordnetQueryHandler {
         Set<String> hyponymSet = wordnet.hyponyms(word);
         LinkedList<String> hyponymList = new LinkedList<>(hyponymSet);
         Collections.sort(hyponymList);
-        for(String findWord : q.words()) {
+        for (String findWord : q.words()) {
             Set<String> hyponymSet2 = wordnet.hyponyms(findWord);
             LinkedList<String> hyponymList2 = new LinkedList<>(hyponymSet2);
             Collections.sort(hyponymList2);
             hyponymList.retainAll(hyponymList2);
         }
-        if (i == 0){
+        if (i == 0) {
             Collections.sort(hyponymList);
             return hyponymList.toString();
         }
-        HashMap<String , Double> dataMap = new HashMap<>(hyponymList.size());
-        for(String findWord : hyponymList){
+        HashMap<String, Double> dataMap = new HashMap<>(hyponymList.size());
+        for (String findWord : hyponymList) {
             TimeSeries wordHistory = ngramMap.countHistory(findWord, start, end);
             double totalCount = 0;
-            for(double count : wordHistory.values()){
+            for (double count : wordHistory.values()) {
                 totalCount += count;
             }
-            if(totalCount > 0){
+            if (totalCount > 0) {
                 dataMap.put(findWord, totalCount);
             }
         }
@@ -59,10 +59,10 @@ public class HyponymsHandler extends NgordnetQueryHandler {
                 return word1.compareTo(word2);
             }
         });
-        List <String> returnList = new LinkedList<>();
-        if(sortedList.size() > q.k()){
+        List<String> returnList = new LinkedList<>();
+        if (sortedList.size() > q.k()) {
             returnList = sortedList.subList(0, q.k());
-        }else{
+        } else {
             returnList = sortedList;
         }
         Collections.sort(returnList);
