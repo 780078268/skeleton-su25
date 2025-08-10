@@ -22,22 +22,20 @@ public class HyponymsHandler extends NgordnetQueryHandler {
         int start = q.startYear();
         int end = q.endYear();
         List<String> words =  q.words();
-        String word = words.get(0);
-        Set<String> hyponymSet = wordnet.hyponyms(word);
-        LinkedList<String> hyponymList = new LinkedList<>(hyponymSet);
-        Collections.sort(hyponymList);
-        for (String findWord : q.words()) {
-            Set<String> hyponymSet2 = wordnet.hyponyms(findWord);
-            LinkedList<String> hyponymList2 = new LinkedList<>(hyponymSet2);
-            Collections.sort(hyponymList2);
-            hyponymList.retainAll(hyponymList2);
+        if(words.isEmpty()){
+            return "[]";
+        }
+        Set<String> commonHyponyms = new HashSet<>(wordnet.hyponyms(words.get(0)));
+        for (int j = 1; j < words.size(); j++) {
+            commonHyponyms.retainAll(wordnet.hyponyms(words.get(j)));
         }
         if (i == 0) {
-            Collections.sort(hyponymList);
-            return hyponymList.toString();
+            LinkedList<String> sortedList = new LinkedList<>(commonHyponyms);
+            Collections.sort(sortedList);
+            return sortedList.toString();
         }
-        HashMap<String, Double> dataMap = new HashMap<>(hyponymList.size());
-        for (String findWord : hyponymList) {
+        HashMap<String, Double> dataMap = new HashMap<>(commonHyponyms.size());
+        for (String findWord : commonHyponyms) {
             TimeSeries wordHistory = ngramMap.countHistory(findWord, start, end);
             double totalCount = 0;
             for (double count : wordHistory.values()) {
@@ -65,7 +63,8 @@ public class HyponymsHandler extends NgordnetQueryHandler {
         } else {
             returnList = sortedList;
         }
-        Collections.sort(returnList);
-        return returnList.toString();
+        List<String> finalReturnList = returnList;
+        Collections.sort(finalReturnList);
+        return finalReturnList.toString();
     }
 }
