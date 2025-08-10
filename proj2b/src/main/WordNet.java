@@ -18,7 +18,7 @@ public class WordNet {
             String line = inSynsets.readLine();
             String[] parts = line.split(",", 3);
             int currentId = Integer.parseInt(parts[0]);
-            if (currentId > maxId) {
+            if (currentId > maxId+1) {
                 maxId = currentId;
             }
         }
