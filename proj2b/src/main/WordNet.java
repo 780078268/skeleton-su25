@@ -13,9 +13,6 @@ public class WordNet {
     public WordNet(String synsetsFile, String hyponymsFile) {
         wordsToIds = new HashMap<>();
         int maxId = -1;
-
-        // --- 步骤 1: 遍历两个文件来找到真正的最大 ID ---
-        // 遍历 synsets 文件
         In synsetsReader = new In(synsetsFile);
         while (synsetsReader.hasNextLine()) {
             String[] parts = synsetsReader.readLine().split(",", 2);
@@ -24,8 +21,6 @@ public class WordNet {
                 maxId = currentId;
             }
         }
-
-        // 遍历 hyponyms 文件，检查每一行的所有ID
         In hyponymsReader = new In(hyponymsFile);
         while (hyponymsReader.hasNextLine()) {
             String[] parts = hyponymsReader.readLine().split(",");
@@ -36,11 +31,7 @@ public class WordNet {
                 }
             }
         }
-
-        // --- 步骤 2: 使用找到的真正最大ID来初始化图 ---
         this.graph = new Graph(maxId + 1);
-
-        // --- 步骤 3: 填充数据结构 ---
         In synsetsReader2 = new In(synsetsFile);
         while (synsetsReader2.hasNextLine()) {
             String line = synsetsReader2.readLine();

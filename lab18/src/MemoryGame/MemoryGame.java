@@ -56,8 +56,11 @@ public class MemoryGame {
     }
 
     public String generateRandomString(int n) {
-        //TODO: Generate random string of letters of length n
-        return null;
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < round; i++) {
+            sb.append(CHARACTERS[rand.nextInt(CHARACTERS.length)]);
+        }
+        return sb.toString();
     }
 
     public void drawFrame(String s) {
@@ -88,24 +91,46 @@ public class MemoryGame {
     }
 
     public void flashSequence(String letters) {
-        //TODO: Display each character in letters, making sure to blank the screen between letters
+        for(int i = 0; i < letters.length(); i++) {
+            String temp = String.valueOf(letters.charAt(i));
+            drawFrame(temp);
+            StdDraw.pause(1000);
+            drawFrame("");
+            StdDraw.pause(1000);
+        }
     }
 
     public String solicitNCharsInput(int n) {
-        //TODO: Read n letters of player input
-        return null;
+        StringBuilder inputString = new StringBuilder();
+        for (int i = 0; i < n; i++) {
+            while (!StdDraw.hasNextKeyTyped()) {
+                StdDraw.pause(100);
+            }
+            char typedChar = StdDraw.nextKeyTyped();
+            inputString.append(typedChar);
+            drawFrame(inputString.toString());
+        }
+        drawFrame(inputString.toString());
+        return inputString.toString();
     }
 
     public void startGame() {
-        //TODO: Set any relevant variables before the game starts
+        round = 1;
+        playerTurn = false;
         this.gameOver = false;
-
-        //TODO: Establish Engine loop
         while (!gameOver) {
-            drawFrame("You should implement this game!");
+            drawFrame("Good Job,Well Done!");
             StdDraw.pause(1000);
+            String s = generateRandomString(this.width);
+            flashSequence(s);
+            String gamer = solicitNCharsInput(round);
+            if(gamer.equals(s)) {
+                round++;
+                gameOver = false;
+            }else{
+                gameOver = true;
+            }
         }
-
         this.drawFrame("Game Over! You made it to round: " + this.round);
     }
 
