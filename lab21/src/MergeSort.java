@@ -52,14 +52,14 @@ public class MergeSort {
             }
         }
         while (i < a.length) {
-            for(;i< a.length;i++){
                 c[k] = a[i];
-            }
+                k++;
+                i++;
         }
         while (j < b.length) {
-            for(;j< b.length;j++){
                 c[k] = b[j];
-            }
+                k++;
+                j++;
         }
         return c;
     }
