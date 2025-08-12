@@ -170,7 +170,11 @@ public class Graph {
                 pq.addAll(edges.get(v));
             }
         }
-        return returnGraph;
+        if(returnGraph.getAllEdges().size() == getAllVertices().size()-1) {
+            return returnGraph;
+        } else{
+            return null;
+        }
     }
 
     public Graph kruskals() {
