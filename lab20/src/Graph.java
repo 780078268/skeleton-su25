@@ -40,6 +40,37 @@ public class Graph {
             edges.put(v, new HashSet<Edge>());
         }
     }
+    /* A Disjoint Set Union (DSU) implementation to assist with Kruskal's algorithm. */
+    private class DisjointSetUnion {
+        private int[] parent;
+
+        public DisjointSetUnion(int n) {
+            parent = new int[n];
+            for (int i = 0; i < n; i++) {
+                parent[i] = i;
+            }
+        }
+
+        public int find(int i) {
+            if (parent[i] == i) {
+                return i;
+            }
+            parent[i] = find(parent[i]); // Path compression
+            return parent[i];
+        }
+
+        public void union(int i, int j) {
+            int rootI = find(i);
+            int rootJ = find(j);
+            if (rootI != rootJ) {
+                parent[rootI] = rootJ;
+            }
+        }
+
+        public boolean isConnected(int i, int j) {
+            return find(i) == find(j);
+        }
+    }
 
     /* Adds Edge E to the graph. */
     public void addEdge(Edge e) {
@@ -119,13 +150,51 @@ public class Graph {
     }
 
     public Graph prims(int start) {
-        // TODO: YOUR CODE HERE
-        return null;
+        if(getAllVertices().size() > getAllEdges().size()+1) {
+            return null;
+        }
+        HashMap<Integer,Boolean> visited = new HashMap<>();
+        PriorityQueue<Edge> pq = new PriorityQueue<>(Comparator.comparing(Edge::getWeight));
+        for(Integer v : getAllVertices()) {
+            visited.put(v, false);
+        }
+        visited.put(start, true);
+        Graph returnGraph = new Graph();
+        pq.addAll(edges.get(start));
+        int totalEdges = 0;
+        while (totalEdges <= getAllVertices().size() -1 ) {
+            Edge e = pq.poll();
+            if (e != null && !visited.get(e.getDest())) {
+                int v = e.getDest();
+                visited.put(v, true);
+                totalEdges++;
+                returnGraph.addEdge(e);
+                pq.addAll(edges.get(v));
+            }
+        }
+        return returnGraph;
     }
 
     public Graph kruskals() {
-        // TODO: YOUR CODE HERE
-        return null;
+        Graph returnGraph = new Graph();
+        for (Integer v : getAllVertices()) {
+            returnGraph.addVertex(v);
+        }
+        PriorityQueue<Edge> pq = new PriorityQueue<>(Comparator.comparing(Edge::getWeight));
+        pq.addAll(allEdges);
+        DisjointSetUnion dsu = new DisjointSetUnion(getAllVertices().size());
+        int totalEdges = 0;
+        while (totalEdges <= getAllVertices().size() -1 ) {
+            Edge e = pq.poll();
+            int u = e.getSource();
+            int v = e.getDest();
+            if(!dsu.isConnected(u, v)) {
+                dsu.union(u, v);
+                totalEdges ++;
+                returnGraph.addEdge(e);
+            }
+        }
+        return returnGraph;
     }
 
     /* A comparator to help you compare vertices in terms of
