@@ -192,10 +192,11 @@ public class Graph {
                 returnGraph.addEdge(e);
             }
         }
-        if(returnGraph.getAllEdges().size() == getAllVertices().size()-1) {
+        if(returnGraph.getAllEdges().size() == this.getAllVertices().size()-1) {
             return returnGraph;
+        } else {
+            return null;
         }
-        return null;
     }
 
     /* A comparator to help you compare vertices in terms of
