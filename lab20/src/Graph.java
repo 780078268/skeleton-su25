@@ -174,9 +174,6 @@ public class Graph {
     }
 
     public Graph kruskals() {
-        if(getAllEdges().isEmpty()){
-            return null;
-        }
         Graph returnGraph = new Graph();
         for (Integer v : getAllVertices()) {
             returnGraph.addVertex(v);
@@ -185,7 +182,7 @@ public class Graph {
         pq.addAll(allEdges);
         DisjointSetUnion dsu = new DisjointSetUnion(getAllVertices().size());
         int totalEdges = 0;
-        while (!pq.isEmpty() ) {
+        while (!pq.isEmpty() && totalEdges < getAllVertices().size()-1) {
             Edge e = pq.poll();
             int u = e.getSource();
             int v = e.getDest();
