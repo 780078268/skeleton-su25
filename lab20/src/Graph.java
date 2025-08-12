@@ -116,9 +116,7 @@ public class Graph {
         while ((curr = vertices.poll()) != null) {
             if (!visited.contains(curr)) {
                 visited.add(curr);
-                for (int n : getNeighbors(curr)) {
-                    vertices.add(n);
-                }
+                vertices.addAll(getNeighbors(curr));
             }
         }
         return visited.size() == g.getAllVertices().size();
@@ -162,7 +160,7 @@ public class Graph {
         Graph returnGraph = new Graph();
         pq.addAll(edges.get(start));
         int totalEdges = 0;
-        while (totalEdges <= getAllVertices().size() -1 ) {
+        while (!pq.isEmpty() ) {
             Edge e = pq.poll();
             if (e != null && !visited.get(e.getDest())) {
                 int v = e.getDest();
@@ -184,7 +182,7 @@ public class Graph {
         pq.addAll(allEdges);
         DisjointSetUnion dsu = new DisjointSetUnion(getAllVertices().size());
         int totalEdges = 0;
-        while (totalEdges <= getAllVertices().size() -1 ) {
+        while (!pq.isEmpty() ) {
             Edge e = pq.poll();
             int u = e.getSource();
             int v = e.getDest();
