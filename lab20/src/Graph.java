@@ -174,6 +174,9 @@ public class Graph {
     }
 
     public Graph kruskals() {
+        if(getAllEdges().isEmpty()){
+            return null;
+        }
         Graph returnGraph = new Graph();
         for (Integer v : getAllVertices()) {
             returnGraph.addVertex(v);
@@ -192,7 +195,10 @@ public class Graph {
                 returnGraph.addEdge(e);
             }
         }
-        return returnGraph;
+        if(returnGraph.getAllEdges().size() == getAllVertices().size()-1) {
+            return returnGraph;
+        }
+        return null;
     }
 
     /* A comparator to help you compare vertices in terms of
