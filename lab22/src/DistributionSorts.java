@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class DistributionSorts {
@@ -5,7 +6,17 @@ public class DistributionSorts {
     /* Destructively sorts ARR using counting sort. Assumes that ARR contains
        only 0, 1, ..., 9. */
     public static void countingSort(int[] arr) {
-        // TODO: YOUR CODE HERE
+        int[] count = new int[10];
+        int index = 0;
+        for(int i = 0; i < arr.length; i++) {
+            int x = arr[i];
+            count[x]++;
+        }
+        for(int i = 0; i < count.length; i++) {
+            for(int j = 0; j < count[i]; j++) {
+                arr[index++] = i;
+            }
+        }
     }
 
     /* Destructively sorts ARR using LSD radix sort. */
@@ -20,7 +31,19 @@ public class DistributionSorts {
        DIGIT-th digit. When DIGIT is equal to 0, sort the numbers by the
        rightmost digit of each number. */
     private static void countingSortOnDigit(int[] arr, int digit) {
-        // TODO: YOUR CODE HERE
+        int[][] temp = new int[10][arr.length];
+        int[]sort = new int[10];
+        int index = 0;
+        for (int i = 0; i < arr.length; i++) {
+            int x = getDigit(arr[i], digit);
+            temp[x][sort[x]] = arr[i];
+            sort[x]++;
+        }
+        for(int i = 0; i < 10; i++) {
+            for(int j = 0; j < sort[i]; j++) {
+                arr[index++] = temp[i][j];
+            }
+        }
     }
 
     /* Returns the largest number of digits that any integer in ARR has. */
