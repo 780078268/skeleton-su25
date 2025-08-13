@@ -31,19 +31,22 @@ public class DistributionSorts {
        DIGIT-th digit. When DIGIT is equal to 0, sort the numbers by the
        rightmost digit of each number. */
     private static void countingSortOnDigit(int[] arr, int digit) {
-        int[][] temp = new int[10][arr.length];
+        int[] count = new int[arr.length];
         int[]sort = new int[10];
         int index = 0;
-        for (int i = 0; i < arr.length; i++) {
+        for(int i = 0; i < arr.length; i++) {
             int x = getDigit(arr[i], digit);
-            temp[x][sort[x]] = arr[i];
             sort[x]++;
         }
-        for(int i = 0; i < 10; i++) {
-            for(int j = 0; j < sort[i]; j++) {
-                arr[index++] = temp[i][j];
-            }
+        for(int i = 1; i < sort.length; i++) {
+            sort[i] = sort[i]+sort[i-1];
         }
+        for(int i = arr.length-1;i>=0;i--) {
+            int x = getDigit(arr[i], digit);
+            count[sort[x]-1] = arr[i];
+            sort[x]--;
+        }
+        System.arraycopy(count, 0, arr, 0, arr.length);
     }
 
     /* Returns the largest number of digits that any integer in ARR has. */
